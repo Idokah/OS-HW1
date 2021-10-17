@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/idokah/OS-Course/HW1/header.h
+
+/Users/idokah/OS-Course/HW1/hello.c
+stdio.h
+-
+stdlib.h
+-
+header.h
+/Users/idokah/OS-Course/HW1/header.h
+string.h
+-
+
