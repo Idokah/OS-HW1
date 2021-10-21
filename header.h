@@ -17,15 +17,14 @@ typedef struct Node {
     struct Node* next;
 } Node;
 
-int handle_input(char *line, FILE *file, Node *head);
+int handle_input(char *line, Node *head);
 
 int is_string_includes(char *string, char i);
 
 int get_type(char *input);
 
-void get_operands(char *line, operand *pInt, operand *pInt1);
+void get_operands(operand *pInt, operand *pInt1);
 
-int need_next_line(char *line);
 
 void push_last(Node *pNode, exp *pExp);
 
@@ -44,3 +43,4 @@ void printType(enum EXP_TYPE type);
 int eval_expr(exp *pExp);
 
 enum WHOM_TO_OUTPUT who_to_output(char *line);
+

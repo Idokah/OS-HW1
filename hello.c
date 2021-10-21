@@ -7,30 +7,23 @@
 int x = 0;
 
 
-
 int main() {
     int con = 1;
-    Node *head = malloc(sizeof (Node));
-    FILE *file = fopen ("/Users/idokah/OS-Course/HW1/in","r");
+    Node *head = (Node*) malloc(sizeof (Node));
     head->expr = NULL ; head->next = NULL ;
     while (con) {
         char input[MAX_COMMAND_LEN];
-        fgets(input, MAX_COMMAND_LEN, file);
-        con = handle_input(input, file, head);
-//        printf("\n");
+        scanf("%s", input);
+        con = handle_input(input, head);
     }
     return 0;
 }
 
 //returns 0 if the input is finished else 1
-int handle_input(char *line, FILE *file, Node *head) {
-    char operand_line[MAX_COMMAND_LEN];
-    if (need_next_line(line)) {
-        fgets(operand_line, MAX_COMMAND_LEN, file);
-    }
+int handle_input(char *line, Node *head) {
 
     if (is_string_includes(line, 'X')) {
-        sscanf(operand_line, "%d", &x);
+        scanf("%d",&x);
         setbuf(stdout, 0);
         printf("X = %d\n", x);
     }
@@ -38,8 +31,8 @@ int handle_input(char *line, FILE *file, Node *head) {
     if (is_string_includes(line, 'N')) {
         int exp_type = get_type(line);
         operand operand_a, operand_b;
-        get_operands(operand_line, &operand_a, &operand_b);
-        exp *new_expr = malloc (sizeof(exp));
+        get_operands(&operand_a, &operand_b);
+        exp *new_expr = (exp*) malloc (sizeof(exp));
         new_expr->type = exp_type;
         new_expr->oper1 = operand_a;
         new_expr->oper2 = operand_b;
@@ -101,7 +94,6 @@ int eval_expr(exp *pExp) {
     int val1, val2;
     val1 = pExp->oper1.type == VAR_X ? x : pExp->oper1.val;
     val2 = pExp->oper2.type == VAR_X ? x : pExp->oper2.val;
-    //what if the type is BAD_OPERAND?
     switch (pExp->type) {
         case ADD:
             return val1+val2;
@@ -112,7 +104,7 @@ int eval_expr(exp *pExp) {
         case DIV:
             return val1/val2;
         case BAD_EXP:
-            return -1; // ?
+            return -1;
     }
 }
 
@@ -133,6 +125,8 @@ void printType(enum EXP_TYPE type) {
         case DIV:
             setbuf(stdout, 0);
             printf(" / ");
+            break;
+        case BAD_EXP:
             break;
     }
     return;
@@ -157,7 +151,7 @@ void push_last(Node *head, exp *pExp) {
         return;
     }
 
-    Node *new_node = malloc (sizeof (Node));
+    Node *new_node = (Node*) malloc (sizeof (Node));
     new_node->expr = pExp;
     new_node->next = NULL;
     Node *last_node = return_last_node(head);
@@ -176,20 +170,16 @@ Node* return_last_node (Node *pNode) {
     return prev;
 }
 
-int need_next_line(char *line) {
-    if (is_string_includes(line,'X')|| is_string_includes(line,'N')) return 1;
-    return 0;
-}
 
-void get_operands(char *line, operand *operand_a, operand *operand_b) {
+void get_operands(operand *operand_a, operand *operand_b) {
     char first[MAX_COMMAND_LEN],second[MAX_COMMAND_LEN];
-    sscanf(line,"%s %s", first, second);
+    scanf ("%s %s",first, second);
     if (strcmp(first,"X") == 0) {
         operand_a->type = VAR_X;
 
     } else {
         int first_val;
-        sscanf(line, "%d", &first_val);
+        sscanf(first, "%d", &first_val);
         operand_a->type = VALUE;
         operand_a->val = first_val;
     }
@@ -197,15 +187,12 @@ void get_operands(char *line, operand *operand_a, operand *operand_b) {
         operand_b->type = VAR_X;
     } else {
         int second_val;
-        sscanf(line, "%s %d", first, &second_val);
+        sscanf(second, "%d",&second_val);
+
         operand_b->type = VALUE;
         operand_b->val = second_val;
     }
     return;
-}
-
-char* get_next_line(FILE *pFile) {
-    return "";
 }
 
 int get_type(char *input) {
