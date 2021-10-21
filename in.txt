@@ -1,9 +1,13 @@
 NPCA
 15 25
+X
+12
 NPCS
 15 X
-X
-3
 NM
-10 6
+10 X
+XPT
+33
+ET
+X 20
 ETL

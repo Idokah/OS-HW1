@@ -25,7 +25,6 @@ int get_type(char *input);
 
 void get_operands(operand *pInt, operand *pInt1);
 
-
 void push_last(Node *pNode, exp *pExp);
 
 void print_last_expr(Node *head, int E);
@@ -44,3 +43,4 @@ int eval_expr(exp *pExp);
 
 enum WHOM_TO_OUTPUT who_to_output(char *line);
 
+void free_list(Node *head);

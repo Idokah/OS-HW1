@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "header.h"
+#include "ex1_q1.h"
 #include <string.h>
 
 
 int x = 0;
+
+
 
 
 int main() {
@@ -16,10 +18,12 @@ int main() {
         scanf("%s", input);
         con = handle_input(input, head);
     }
+    free_list(head);
     return 0;
 }
 
-//returns 0 if the input is finished else 1
+
+//returns 0 if the input is finished (L) else 1
 int handle_input(char *line, Node *head) {
 
     if (is_string_includes(line, 'X')) {
@@ -212,4 +216,14 @@ enum WHOM_TO_OUTPUT who_to_output(char *line) {
     if (is_string_includes(line,'C')) return CURRENT;
     if (is_string_includes(line,'T')) return ALL_EXP;
     return NONE;
+}
+
+void free_list(Node *head) {
+    Node* tmp;
+    while (head != NULL)
+    {
+        tmp = head;
+        head = head->next;
+        free(tmp);
+    }
 }
