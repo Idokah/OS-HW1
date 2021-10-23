@@ -108,6 +108,7 @@ int eval_expr(exp *pExp) {
         case DIV:
             return val1/val2;
         case BAD_EXP:
+		default:
             return -1;
     }
 }
